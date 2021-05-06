@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class ControllerAdvisor {
 
-    @ExceptionHandler(value = BadRequestException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponseDTO badRequestException(BadRequestException ex) {
-        log.error("Bad request Exception "+ex.getMessage(),ex);
-        return ErrorResponseDTO.build(HttpStatus.BAD_REQUEST.value(), Constants.BAD_REQUEST, ex.getMessage());
-    }
+	@ExceptionHandler(value = BadRequestException.class)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponseDTO badRequestException(BadRequestException ex) {
+		log.error("Bad request Exception " + ex.getMessage(), ex);
+		return ErrorResponseDTO.build(HttpStatus.BAD_REQUEST.value(), Constants.BAD_REQUEST, ex.getClass().getName(), ex.getMessage(), ex.getCause().getCause().getMessage());
+	}
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<ErrorResponseDTO> internalServerException(Exception ex) {
-        log.error("Internal server Error "+ex.getMessage(),ex);
-        return new ResponseEntity<>(ErrorResponseDTO.build(HttpStatus.INTERNAL_SERVER_ERROR.value(), Constants.BAD_REQUEST, ex.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<ErrorResponseDTO> internalServerException(Exception ex) {
+		log.error("Internal server Error " + ex.getMessage(), ex);
+		return new ResponseEntity<>(ErrorResponseDTO.build(HttpStatus.INTERNAL_SERVER_ERROR.value(), Constants.INTERNAL_ERROR, ex.getClass().getName(), ex.getMessage(), ex.getLocalizedMessage()),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
