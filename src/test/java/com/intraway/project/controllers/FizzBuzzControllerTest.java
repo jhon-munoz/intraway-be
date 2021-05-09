@@ -1,5 +1,7 @@
 package com.intraway.project.controllers;
 
+import com.intraway.project.constants.Constants;
+import com.intraway.project.dtos.ErrorResponseDTO;
 import com.intraway.project.dtos.ResponseDTO;
 import com.intraway.project.services.FizzBuzzService;
 import org.junit.jupiter.api.Test;
@@ -7,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.assertEquals;
@@ -48,6 +51,16 @@ public class FizzBuzzControllerTest {
 		responseDTO.setDescription(DESCRIPTION);
 		responseDTO.setList(LIST);
 		return responseDTO;
+	}
+
+	public ErrorResponseDTO errorResponseDTO(){
+		ErrorResponseDTO errorResponseDTO=new ErrorResponseDTO();
+		errorResponseDTO.setStatus(HttpStatus.BAD_REQUEST.value());
+		errorResponseDTO.setError(Constants.BAD_REQUEST);
+		errorResponseDTO.setException("Bad");
+		errorResponseDTO.setMessage("Bad Message");
+		errorResponseDTO.setPath("/intraway/api/fizzbuzz/");
+		return errorResponseDTO;
 	}
 
 }

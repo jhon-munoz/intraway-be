@@ -1,9 +1,7 @@
 package com.intraway.project.services;
 
-import com.intraway.project.constants.Constants;
 import com.intraway.project.domains.FizzBuzz;
 import com.intraway.project.dtos.ResponseDTO;
-import com.intraway.project.exceptions.BadGatewayException;
 import com.intraway.project.exceptions.BadRequestException;
 import com.intraway.project.exceptions.errors.ErrorEnum;
 import com.intraway.project.repositories.FizzBuzzRepository;
@@ -12,16 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class FizzBuzzServiceTest {
@@ -122,15 +118,6 @@ public class FizzBuzzServiceTest {
 		try {
 			fizzBuzzService.getList(MAX, MIN);
 		}catch (BadRequestException ex){
-			assertEquals(ErrorEnum.INCORRECT_PARAMETER.getMessage(), ex.getMessage());
-		}
-	}
-
-	@Test
-	public void shouldFail_whenCalling_getList_RepoNotWork() {
-		try {
-			fizzBuzzService.getList(MIN, MAX);
-		}catch (BadGatewayException ex){
 			assertEquals(ErrorEnum.INCORRECT_PARAMETER.getMessage(), ex.getMessage());
 		}
 	}

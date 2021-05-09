@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class ErrorResponseDTO<T> {
+public class ErrorResponseDTO {
 	private Long timestamp;
 	private Integer status;
 	private String error;
