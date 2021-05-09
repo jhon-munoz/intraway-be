@@ -1,4 +1,4 @@
-package com.intraway.project.services.Impl;
+package com.intraway.project.services.impl;
 
 import com.intraway.project.constants.Constants;
 import com.intraway.project.domains.FizzBuzz;
@@ -30,7 +30,7 @@ public class FizzBuzzServiceImpl implements FizzBuzzService {
 	@Override
 	public ResponseDTO getList(Integer min, Integer max) {
 		List<String> list = new LinkedList<>();
-		ResponseDTO responseDTO = new ResponseDTO();
+		ResponseDTO responseDTO;
 		if (min >= max) {
 			throw new BadRequestException(ErrorEnum.INCORRECT_PARAMETER);
 		} else {
@@ -40,8 +40,13 @@ public class FizzBuzzServiceImpl implements FizzBuzzService {
 						: (i % 5 == 0) ? "Buzz" : String.valueOf(i));
 			}
 		}
+		FizzBuzz fizzBuzz = fillFizzBuzz(list);
+		responseDTO = mapper.map(fizzBuzz, ResponseDTO.class);
+		return responseDTO;
+	}
 
-		FizzBuzz fizzBuzz=new FizzBuzz();
+	private FizzBuzz fillFizzBuzz(List<String> list) {
+		FizzBuzz fizzBuzz = new FizzBuzz();
 		fizzBuzz.setTimestamp(Timestamp.from(Instant.now()).getTime());
 		fizzBuzz.setDescription(list.contains("Fizz")
 				? list.contains("Buzz") ? Constants.MULTIPLE_THREE_AND_FIVE
@@ -49,8 +54,7 @@ public class FizzBuzzServiceImpl implements FizzBuzzService {
 				: list.contains("Buzz") ? Constants.MULTIPLE_FIVE : Constants.NO_MULTIPLE);
 		fizzBuzz.setList(list.toString());
 		fizzBuzzRepository.save(fizzBuzz);
-		responseDTO= mapper.map(fizzBuzz, ResponseDTO.class);
-		return responseDTO;
+		return fizzBuzz;
 	}
 
 }

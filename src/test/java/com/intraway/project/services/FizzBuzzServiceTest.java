@@ -5,7 +5,7 @@ import com.intraway.project.dtos.ResponseDTO;
 import com.intraway.project.exceptions.BadRequestException;
 import com.intraway.project.exceptions.errors.ErrorEnum;
 import com.intraway.project.repositories.FizzBuzzRepository;
-import com.intraway.project.services.Impl.FizzBuzzServiceImpl;
+import com.intraway.project.services.impl.FizzBuzzServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
