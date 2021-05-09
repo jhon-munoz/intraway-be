@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS fizzbuzz;
+
+CREATE TABLE fizzbuzz (
+id BIGINT NOT NULL IDENTITY ,
+timestamp BIGINT NOT NULL,
+description VARCHAR(50) NOT NULL,
+list VARCHAR (100) NOT NULL,
+PRIMARY KEY (id)
+);

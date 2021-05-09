@@ -1,21 +1,27 @@
 package com.intraway.project.controllers;
 
+import com.intraway.project.dtos.ResponseDTO;
 import com.intraway.project.services.FizzBuzzService;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
 public class FizzBuzzControllerTest {
 
-	public static final Long ACCOUNT = 123L;
-	public static final Long DEST_ACCOUNT = 124L;
-	public static final Double AMOUNT = 1.23;
-	public static final String CURRENCY = "USD";
+	public static final Integer MIN = 1;
+	public static final Integer MAX = 10;
+	public static final Long CODE = 1L;
+	public static final Long TIMESTAMP = 123L;
+	public static final String DESCRIPTION = "se encontraron múltiplos de 3 y de 5";
+	public static final String LIST = "[1,2,Fizz,4,Buzz,Fizz,7,8,Fizz,Buzz]";
 
 	@InjectMocks
 	FizzBuzzController fizzBuzzController;
@@ -23,5 +29,25 @@ public class FizzBuzzControllerTest {
 	@Mock
 	FizzBuzzService service;
 
+	@Test
+	public void shouldSuccess_whenCalling_getList(){
+		when(service.getList(MIN,MAX)).thenReturn(responseDTO());
+		ResponseEntity<ResponseDTO> response = fizzBuzzController.getList(MIN, MAX);
+
+		assertNotNull(response);
+		assertEquals(response.getBody().getCode(), CODE);
+		assertEquals(response.getBody().getTimestamp(), TIMESTAMP);
+		assertEquals(response.getBody().getDescription(), DESCRIPTION);
+		assertEquals(response.getBody().getList(), LIST);
+	}
+
+	public ResponseDTO responseDTO() {
+		ResponseDTO responseDTO = new ResponseDTO();
+		responseDTO.setCode(CODE);
+		responseDTO.setTimestamp(TIMESTAMP);
+		responseDTO.setDescription(DESCRIPTION);
+		responseDTO.setList(LIST);
+		return responseDTO;
+	}
 
 }
